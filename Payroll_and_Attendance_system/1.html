@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-controller="myController">
+
+  <form name="loginForm" ng-submit="submitForm()" novalidate>
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" ng-model="user.username" required>
+
+    <br>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" ng-model="user.password" ng-pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/"
+      required>
+    <div ng-show="loginForm.password.$error.pattern">
+      Password must be at least 8 characters long and include at least one lowercase letter, one uppercase letter, and one digit.
+    </div>
+
+    <br>
+
+    <button type="submit" ng-disabled="loginForm.$invalid">Login</button>
+  </form>
+
+  <script>
+    var app = angular.module('myApp', []);
+
+    app.controller('myController', function ($scope) {
+      $scope.submitForm = function () {
+        if ($scope.loginForm.$valid) {
+          // Perform login logic
+          console.log("Form submitted successfully!");
+        } else {
+          console.log("Form validation failed. Please check the form for errors.");
+        }
+      };
+    });
+  </script>
+
+</body>
+</html>
